@@ -6,13 +6,18 @@ A **DeskFlow API** é uma Web API RESTful para gerenciamento de chamados e supor
 
 O sistema terá como objetivo centralizar o cadastro de categorias, a abertura e o acompanhamento de chamados, o controle do ciclo de vida dos atendimentos e o registro do histórico de interações da equipe de suporte.
 
-## Tecnologias previstas
+## Dependências
 
-- .NET 10
-- ASP.NET Core Web API
-- Entity Framework Core
-- SQL Server
-- OpenAPI/Swagger
+- .NET SDK 10;
+- ASP.NET Core Web API;
+- SQL Server Express, instância `SQLEXPRESS`.
+
+## Configuração concluída
+
+- A estrutura inicial em camadas foi criada.
+- O `AppDbContext` foi criado em `Data/AppDbContext.cs`.
+- O contexto foi registrado no `Program.cs`.
+- A connection string `DefaultConnection` foi configurada no `appsettings.json`.
 
 ## Organização planejada
 
@@ -20,4 +25,4 @@ O projeto será desenvolvido em camadas, separando responsabilidades entre Contr
 
 ## Status atual
 
-O projeto está em sua etapa inicial de configuração. A estrutura básica da Web API já foi criada e a aplicação compila com sucesso. As funcionalidades de categorias, chamados, interações, filtros e tratamento global de erros serão implementadas progressivamente.
+As funcionalidades de categorias, chamados, interações, filtros, migrations e tratamento global de erros serão implementadas nas próximas etapas.
