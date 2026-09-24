@@ -24,5 +24,13 @@ namespace Deskflow.API.Controllers
             await _categoryService.CreateAsync(category);
             return Created($"/api/category/{category.Id}", new CategoryResponseDto { Id = category.Id, Name = category.Name });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllCategories()
+        {
+            var categories = await _categoryService.GetAllAsync();
+            var categoryDtos = categories.Select(c => new CategoryResponseDto { Id = c.Id, Name = c.Name }).ToList();
+            return Ok(categoryDtos);
+        }
     }
 }
