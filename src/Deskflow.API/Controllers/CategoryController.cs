@@ -32,5 +32,19 @@ namespace Deskflow.API.Controllers
             var categoryDtos = categories.Select(c => new CategoryResponseDto { Id = c.Id, Name = c.Name }).ToList();
             return Ok(categoryDtos);
         }
+
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> GetCategory(Guid id)
+        {
+            try
+            {
+                var category = await _categoryService.GetByIdAsync(id);
+                return Ok(new CategoryResponseDto { Id = category.Id, Name = category.Name });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
     }
 }
