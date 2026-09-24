@@ -46,5 +46,20 @@ namespace Deskflow.API.Controllers
                 return NotFound(ex.Message);
             }
         }
+
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> UpdateCategory(Guid id, [FromBody] CategoryDto categoryDto)
+        {
+            var category = new Category { Name = categoryDto.Name };
+            try
+            {
+                await _categoryService.UpdateAsync(id, category);
+                return NoContent();
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
     }
 }
