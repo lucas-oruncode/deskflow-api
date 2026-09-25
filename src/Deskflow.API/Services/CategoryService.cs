@@ -38,7 +38,7 @@ namespace Deskflow.API.Services
             
             if (category == null)
             {
-                throw new ArgumentException($"Categoria com ID {id} não encontrada.");
+                throw new KeyNotFoundException($"Categoria com ID {id} não encontrada.");
             }
             
             await _categoryRepository.DeleteAsync(category);
