@@ -58,6 +58,46 @@ Exemplo de corpo:
 
 Uma criação bem-sucedida retorna `201 Created`, com o identificador e o nome da categoria criada.
 
+### Listar categorias
+
+```text
+GET /api/category
+```
+
+Retorna `200 OK` com uma lista de categorias. Quando não existem registros, a resposta é uma lista vazia.
+
+### Consultar categoria por ID
+
+```text
+GET /api/category/{id}
+```
+
+Retorna `200 OK` quando a categoria existe e `404 Not Found` quando o identificador não corresponde a uma categoria cadastrada.
+
+### Atualizar categoria
+
+```text
+PUT /api/category/{id}
+```
+
+Exemplo de corpo:
+
+```json
+{
+  "name": "Software"
+}
+```
+
+Uma atualização bem-sucedida retorna `204 No Content`.
+
+### Excluir categoria
+
+```text
+DELETE /api/category/{id}
+```
+
+Uma exclusão bem-sucedida retorna `204 No Content`. Categorias inexistentes retornam `404 Not Found`.
+
 ## Organização planejada
 
 O projeto será desenvolvido em camadas, separando responsabilidades entre Controllers, Services, Repositories, Models, Data e Middlewares.
@@ -67,5 +107,7 @@ O projeto será desenvolvido em camadas, separando responsabilidades entre Contr
 - Entidade, Repository e Service de categorias implementados;
 - DTOs de entrada e saída de categorias implementados;
 - Migration inicial criada para a tabela `Categories`;
-- Endpoint `POST /api/category` implementado;
-- Os demais endpoints de categorias, chamados, interações, filtros e tratamento global de erros serão implementados nas próximas etapas.
+- Endpoints CRUD de categorias implementados;
+- Testes manuais dos endpoints realizados pelo Swagger;
+- A validação para impedir exclusão de categorias vinculadas a chamados será concluída após a criação da entidade `Chamado`;
+- Chamados, interações, filtros e tratamento global de erros serão implementados nas próximas etapas.
