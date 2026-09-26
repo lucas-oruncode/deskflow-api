@@ -46,7 +46,26 @@ namespace Deskflow.API.Controllers
                     });
         }
 
-        
+        [HttpGet]
+        public async Task<IActionResult> GetAllTickets()
+        {
+            var tickets = await _ticketService.GetAllAsync();
+            var ticketDtos = tickets.Select(ticket => 
+                    new TicketResponseDto
+                    {
+                       Id = ticket.Id,
+                       Title = ticket.Title,
+                       Description = ticket.Description,
+                       Requester = ticket.Requester,
+                       Status = ticket.Status,
+                       Priority = ticket.Priority,
+                       CategoryId = ticket.CategoryId,
+                       CreatedAt = ticket.CreatedAt,
+                       ClosedAt = ticket.ClosedAt
+                    }).ToList();
+            
+            return Ok(ticketDtos);
+        }
         
     }
 }
