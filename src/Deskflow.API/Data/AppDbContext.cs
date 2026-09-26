@@ -78,6 +78,19 @@ namespace Deskflow.API.Data
             {
             interaction.ToTable("Interactions");
             interaction.HasKey(i => i.Id);
+            interaction.Property(i => i.Id)
+                       .IsRequired();
+
+            interaction.Property(i => i.Message)
+                       .IsRequired()
+                       .HasColumnType("nvarchar(200)");
+
+            interaction.Property(i => i.Author)
+                       .IsRequired()
+                       .HasColumnType("nvarchar(50)");
+
+            interaction.Property(i => i.CreatedAt)
+                       .IsRequired();
             });
         }
     }
