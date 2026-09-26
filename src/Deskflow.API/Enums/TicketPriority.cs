@@ -2,8 +2,8 @@ namespace Deskflow.API.Enums
 {
     public enum TicketPriority
     {
-        High,
+        Low,
         Medium,
-        Low
+        High
     }
 }
