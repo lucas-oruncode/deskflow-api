@@ -92,5 +92,27 @@ namespace Deskflow.API.Controllers
                 return NotFound(ex.Message);
             }
         }
+
+        [HttpPatch("{id:guid}/start")]
+        public async Task<IActionResult> StartTicket(Guid id)
+        {
+            try
+            {
+                await _ticketService.StartAsync(id);
+                return NoContent();
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

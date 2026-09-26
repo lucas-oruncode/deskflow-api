@@ -69,6 +69,30 @@ namespace Deskflow.API.Services
             return ticket;
         }
 
+        public async Task StartAsync(Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                throw new ArgumentException("O ID do chamado não pode ser nulo.");
+            }
+
+            var ticket = await _ticketRepository.GetByIdAsync(id);
+
+            if (ticket == null)
+            {
+                throw new KeyNotFoundException($"Chamado com ID {id} não encontrado");
+            }
+
+            if (ticket.Status != TicketStatus.Open)
+            {
+                throw new InvalidOperationException("O chamado só pode ser iniciado quando estiver aberto.");
+            }
+
+            ticket.Status = TicketStatus.InProgress;
+
+            await _ticketRepository.UpdateAsync(ticket);
+        }
+
         private void ValidateTitle(string title)
         {
             if (string.IsNullOrWhiteSpace(title))
