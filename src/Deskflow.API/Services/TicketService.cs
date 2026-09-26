@@ -93,6 +93,42 @@ namespace Deskflow.API.Services
             await _ticketRepository.UpdateAsync(ticket);
         }
 
+        public async Task CloseAsync(Guid id, string solution)
+        {
+            if (id == Guid.Empty)
+            {
+                throw new ArgumentException("O ID do chamado não pode ser vazio.");
+            }
+
+            var ticket = await _ticketRepository.GetByIdAsync(id);
+
+            if (ticket == null)
+            {
+                throw new KeyNotFoundException($"Chamado com ID {id} não encontrado");
+            }
+
+            if (ticket.Status != TicketStatus.InProgress)
+            {
+                throw new InvalidOperationException("O chamado só pode ser encerrado quando estiver em progresso.");
+            }
+            
+            if (string.IsNullOrWhiteSpace(solution))
+            {
+                throw new ArgumentException("A solução do chamado é obrigatória.");
+            }
+
+            if (solution.Trim().Length > 500)
+            {
+                throw new ArgumentException("A solução não pode ter mais de 500 caracteres.");
+            }
+
+            ticket.Status = TicketStatus.Closed;
+            ticket.Solution = solution.Trim();
+            ticket.ClosedAt = DateTime.UtcNow;
+
+            await _ticketRepository.UpdateAsync(ticket);   
+        }
+
         private void ValidateTitle(string title)
         {
             if (string.IsNullOrWhiteSpace(title))

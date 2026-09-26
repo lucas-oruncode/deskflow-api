@@ -12,7 +12,7 @@ namespace Deskflow.API.Models
         public string Requester { get; set; }
         public TicketPriority Priority { get; set; }
         public TicketStatus Status { get; set; } = TicketStatus.Open;
-        public string? Solution { get; set; }
+        public string Solution { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? ClosedAt { get; set; }
  

@@ -114,5 +114,27 @@ namespace Deskflow.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPatch("{id:guid}/close")]
+        public async Task<IActionResult> CloseTicket(Guid id, [FromBody] CloseTicketDto closeTicketDto)
+        {
+            try
+            {
+                await _ticketService.CloseAsync(id, closeTicketDto.Solution);
+                return NoContent();
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

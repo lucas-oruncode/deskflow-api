@@ -9,5 +9,6 @@ namespace Deskflow.API.Services.Interfaces
         Task<Ticket> GetByIdAsync(Guid id);
         Task CreateAsync(Ticket ticket);
         Task StartAsync(Guid id);
+        Task CloseAsync(Guid id, string solution);
     }
 }
