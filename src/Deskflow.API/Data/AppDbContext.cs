@@ -11,6 +11,7 @@ namespace Deskflow.API.Data
         }
 
         public DbSet<Category> Categories => Set<Category>();
+        public DbSet<Ticket> Tickets => Set<Ticket>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,6 +28,42 @@ namespace Deskflow.API.Data
                 category.Property(e => e.Name)
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
+
+                category.HasMany(c => c.Tickets)
+                        .WithOne(t => t.Category)
+                        .HasForeignKey(t => t.CategoryId);
+            });
+
+            modelBuilder.Entity<Ticket>(ticket =>
+            {
+                ticket.ToTable("Tickets");
+
+                ticket.HasKey(e => e.Id);
+                ticket.Property(e => e.Id)
+                      .IsRequired();
+
+                ticket.Property(e => e.Title)
+                      .IsRequired()
+                      .HasColumnType("nvarchar(50)");
+
+                ticket.Property(e => e.Description)
+                      .IsRequired()
+                      .HasColumnType("nvarchar(200)");
+
+                ticket.Property(e => e.Requester)
+                      .IsRequired()
+                      .HasColumnType("nvarchar(50)");
+
+                ticket.Property(e => e.Priority)
+                      .IsRequired();
+
+                ticket.Property(e => e.Status)
+                      .IsRequired();
+
+                ticket.Property(e => e.CreatedAt)
+                      .IsRequired();
+
+                ticket.Property(e => e.ClosedAt);
             });
         }
     }
