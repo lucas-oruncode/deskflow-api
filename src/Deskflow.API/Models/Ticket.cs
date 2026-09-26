@@ -15,6 +15,7 @@ namespace Deskflow.API.Models
         public string Solution { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? ClosedAt { get; set; }
+        public ICollection<Interaction> Interactions { get; set; } = new List<Interaction>();
  
     }
 }
