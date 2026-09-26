@@ -47,22 +47,6 @@ namespace Deskflow.API.Services
             await _ticketRepository.CreateAsync(ticket);
         }
 
-        public async Task DeleteAsync(Guid id)
-        {
-            if (id == Guid.Empty)
-            {
-                throw new ArgumentException("O ID do chamado não pode ser vazio.");
-            }
-
-            var ticket = await _ticketRepository.GetByIdAsync(id);
-
-            if(ticket == null)
-            {
-                throw new KeyNotFoundException($"Chamado com ID {id} não encontrada.");
-            }
-            await _ticketRepository.DeleteAsync(ticket);
-        }
-
         public async Task UpdateAsync(Guid id, Ticket ticket)
         {
             if (id == Guid.Empty)

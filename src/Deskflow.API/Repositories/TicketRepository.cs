@@ -22,11 +22,6 @@ namespace Deskflow.API.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(Ticket ticket)
-        {
-            _context.Tickets.Remove(ticket);
-            await _context.SaveChangesAsync();
-        }
         public async Task UpdateAsync(Ticket ticket)
         {
             _context.Tickets.Update(ticket);
