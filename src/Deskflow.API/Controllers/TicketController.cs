@@ -66,6 +66,31 @@ namespace Deskflow.API.Controllers
             
             return Ok(ticketDtos);
         }
-        
+
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> GetTicketById(Guid id)
+        {
+            try
+            {
+                var ticket = await _ticketService.GetByIdAsync(id);            
+                return Ok( new TicketResponseDto
+                    {
+                        Id = ticket.Id,
+                        Title = ticket.Title,
+                        Description = ticket.Description,
+                        Requester = ticket.Requester,
+                        Status = ticket.Status,
+                        Priority = ticket.Priority,
+                        CategoryId = ticket.CategoryId,
+                        CreatedAt = ticket.CreatedAt,
+                        ClosedAt = ticket.ClosedAt
+                    }
+                );            
+            }
+            catch(KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
     }
 }
