@@ -47,33 +47,6 @@ namespace Deskflow.API.Services
             await _ticketRepository.CreateAsync(ticket);
         }
 
-        public async Task UpdateAsync(Guid id, Ticket ticket)
-        {
-            if (id == Guid.Empty)
-            {
-                throw new ArgumentException("O ID do chamado não pode ser vazio.");
-            }
-
-            if (ticket is null)
-            {
-                throw new ArgumentException("O chamado não pode ser nulo.");
-            }
-
-            var existingTicket = await _ticketRepository.GetByIdAsync(id);
-
-            if (existingTicket is null)
-            {
-                throw new KeyNotFoundException($"Chamado com ID {id} não encontrado.");
-            }
-
-            existingTicket.Title = ticket.Title.Trim();
-            existingTicket.Description = ticket.Description.Trim();
-            existingTicket.Requester = ticket.Requester.Trim();
-            existingTicket.Priority = ticket.Priority;
-            existingTicket.CategoryId = ticket.CategoryId;
-
-            await _ticketRepository.UpdateAsync(existingTicket);
-        }
         public async Task<List<Ticket>> GetAllAsync()
         {
             return await _ticketRepository.GetAllAsync();
