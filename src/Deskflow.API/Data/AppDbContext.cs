@@ -59,6 +59,9 @@ namespace Deskflow.API.Data
 
                 ticket.Property(e => e.Status)
                       .IsRequired();
+                
+                ticket.Property(t => t.Solution)
+                      .HasColumnType("nvarchar(500)");
 
                 ticket.Property(e => e.CreatedAt)
                       .IsRequired();
