@@ -12,6 +12,7 @@ namespace Deskflow.API.Data
 
         public DbSet<Category> Categories => Set<Category>();
         public DbSet<Ticket> Tickets => Set<Ticket>();
+        public DbSet<Interaction> Interactions => Set<Interaction>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -67,6 +68,29 @@ namespace Deskflow.API.Data
                       .IsRequired();
 
                 ticket.Property(e => e.ClosedAt);
+
+                ticket.HasMany(t => t.Interactions)
+                      .WithOne(i => i.Ticket)
+                      .HasForeignKey(i => i.TicketId);
+            });
+
+            modelBuilder.Entity<Interaction>(interaction =>
+            {
+            interaction.ToTable("Interactions");
+            interaction.HasKey(i => i.Id);
+            interaction.Property(i => i.Id)
+                       .IsRequired();
+
+            interaction.Property(i => i.Message)
+                       .IsRequired()
+                       .HasColumnType("nvarchar(200)");
+
+            interaction.Property(i => i.Author)
+                       .IsRequired()
+                       .HasColumnType("nvarchar(50)");
+
+            interaction.Property(i => i.CreatedAt)
+                       .IsRequired();
             });
         }
     }
