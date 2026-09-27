@@ -32,6 +32,7 @@ namespace Deskflow.API.Repositories
         {
             var tickets = await _context.Tickets
                                         .Include(t => t.Category)
+                                        .Include(t => t.Interactions)
                                         .ToListAsync();
             return tickets;
         }
@@ -40,6 +41,7 @@ namespace Deskflow.API.Repositories
         {
             return await _context.Tickets
                                  .Include(t => t.Category)
+                                 .Include(t => t.Interactions)
                                  .FirstOrDefaultAsync(t => t.Id == id);
         }
 
