@@ -172,6 +172,31 @@ Exemplo de corpo:
 
 O encerramento só é permitido para tickets `InProgress`. A operação altera o status para `Closed`, registra a solução e preenche `ClosedAt`. Uma operação bem-sucedida retorna `204 No Content`.
 
+### Criar interação em um ticket
+
+```text
+POST /api/ticket/{ticketId}/interactions
+```
+
+Exemplo de corpo:
+
+```json
+{
+  "message": "Foi solicitado o teste do equipamento.",
+  "author": "Lucas"
+}
+```
+
+A interação deve estar vinculada a um ticket existente e que não esteja fechado. Uma criação bem-sucedida retorna `201 Created`.
+
+### Listar interações de um ticket
+
+```text
+GET /api/ticket/{ticketId}/interactions
+```
+
+Retorna `200 OK` com as interações cadastradas para o ticket. Tickets inexistentes retornam `404 Not Found`.
+
 ## Organização planejada
 
 O projeto será desenvolvido em camadas, separando responsabilidades entre Controllers, Services, Repositories, Models, Data e Middlewares.
@@ -185,8 +210,12 @@ O projeto será desenvolvido em camadas, separando responsabilidades entre Contr
 - Entidade, Repository e Service básicos de tickets implementados;
 - DTOs de entrada e saída de tickets implementados;
 - Migrations criadas para tickets e solução do atendimento;
+- Migration criada para a tabela `Interactions`;
 - Endpoints de criação, listagem e consulta de tickets implementados;
 - Endpoints de início e encerramento do atendimento implementados;
+- Entidade, Repository e Service de interações implementados;
+- DTOs de entrada e saída de interações implementados;
+- Endpoints de criação e listagem de interações implementados;
 - Testes manuais dos endpoints realizados pelo Swagger;
 - A validação para impedir exclusão de categorias vinculadas a chamados será concluída após a criação da entidade `Chamado`;
-- Interações, filtros e tratamento global de erros serão implementados nas próximas etapas.
+- Filtros e tratamento global de erros serão implementados nas próximas etapas.
