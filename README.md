@@ -132,7 +132,21 @@ O status e as datas do ticket são definidos automaticamente pela aplicação. U
 GET /api/ticket
 ```
 
-Retorna `200 OK` com os tickets cadastrados.
+Retorna `200 OK` com os tickets cadastrados. A consulta aceita filtros opcionais combinados por status, prioridade e categoria:
+
+```text
+GET /api/ticket?status=InProgress&priority=High&categoryId={id}
+```
+
+Os filtros disponíveis são:
+
+```text
+status      = Open | InProgress | Closed
+priority    = Low | Medium | High
+categoryId  = identificador GUID da categoria
+```
+
+Quando nenhum filtro é informado, todos os tickets são retornados. Quando mais de um filtro é informado, eles são combinados na mesma consulta.
 
 ### Consultar ticket por ID
 
@@ -141,6 +155,8 @@ GET /api/ticket/{id}
 ```
 
 Retorna `200 OK` quando o ticket existe e `404 Not Found` quando o identificador não corresponde a um ticket cadastrado.
+
+A consulta por ID retorna os dados completos do ticket, incluindo a categoria associada e a lista de interações.
 
 ### Iniciar atendimento
 
@@ -212,10 +228,12 @@ O projeto será desenvolvido em camadas, separando responsabilidades entre Contr
 - Migrations criadas para tickets e solução do atendimento;
 - Migration criada para a tabela `Interactions`;
 - Endpoints de criação, listagem e consulta de tickets implementados;
+- Consulta detalhada de ticket com categoria e interações implementada;
 - Endpoints de início e encerramento do atendimento implementados;
 - Entidade, Repository e Service de interações implementados;
 - DTOs de entrada e saída de interações implementados;
 - Endpoints de criação e listagem de interações implementados;
+- Filtros dinâmicos de tickets por status, prioridade e categoria implementados;
 - Testes manuais dos endpoints realizados pelo Swagger;
 - A validação para impedir exclusão de categorias vinculadas a chamados será concluída após a criação da entidade `Chamado`;
-- Filtros e tratamento global de erros serão implementados nas próximas etapas.
+- Tratamento global de erros será implementado na próxima etapa.
