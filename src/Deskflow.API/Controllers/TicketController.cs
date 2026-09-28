@@ -1,3 +1,5 @@
+using Deskflow.API.DTOs.Categories;
+using Deskflow.API.DTOs.Interactions;
 using Deskflow.API.DTOs.Tickets;
 using Deskflow.API.Models;
 using Deskflow.API.Services.Interfaces;
@@ -47,9 +49,9 @@ namespace Deskflow.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllTickets()
+        public async Task<IActionResult> GetAllTickets([FromQuery] TicketFilterDto filters)
         {
-            var tickets = await _ticketService.GetAllAsync();
+            var tickets = await _ticketService.GetAllAsync(filters);
             var ticketDtos = tickets.Select(ticket => 
                     new TicketResponseDto
                     {
@@ -73,7 +75,7 @@ namespace Deskflow.API.Controllers
             try
             {
                 var ticket = await _ticketService.GetByIdAsync(id);            
-                return Ok( new TicketResponseDto
+                return Ok( new TicketDetailsResponseDto
                     {
                         Id = ticket.Id,
                         Title = ticket.Title,
@@ -83,7 +85,22 @@ namespace Deskflow.API.Controllers
                         Priority = ticket.Priority,
                         CategoryId = ticket.CategoryId,
                         CreatedAt = ticket.CreatedAt,
-                        ClosedAt = ticket.ClosedAt
+                        ClosedAt = ticket.ClosedAt,
+                        Category = new CategoryResponseDto
+                        {
+                            Id = ticket.Category.Id,
+                            Name = ticket.Category.Name
+                        },
+                        Interactions = ticket.Interactions
+                                             .Select(i =>
+                                             new InteractionResponseDto
+                                             {
+                                                 Id = i.Id,
+                                                 TicketId = i.TicketId,
+                                                 Message = i.Message,
+                                                 Author = i.Author,
+                                                 CreatedAt = i.CreatedAt
+                                             }).ToList()
                     }
                 );            
             }
