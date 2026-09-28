@@ -1,3 +1,4 @@
+using Deskflow.API.DTOs.Tickets;
 using Deskflow.API.Enums;
 using Deskflow.API.Models;
 using Deskflow.API.Repositories.Interfaces;
@@ -47,9 +48,9 @@ namespace Deskflow.API.Services
             await _ticketRepository.CreateAsync(ticket);
         }
 
-        public async Task<List<Ticket>> GetAllAsync()
+        public async Task<List<Ticket>> GetAllAsync(TicketFilterDto filters)
         {
-            return await _ticketRepository.GetAllAsync();
+            return await _ticketRepository.GetAllAsync(filters);
         }
 
         public async Task<Ticket> GetByIdAsync(Guid id)

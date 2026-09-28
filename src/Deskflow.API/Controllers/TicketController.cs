@@ -49,9 +49,9 @@ namespace Deskflow.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllTickets()
+        public async Task<IActionResult> GetAllTickets([FromQuery] TicketFilterDto filters)
         {
-            var tickets = await _ticketService.GetAllAsync();
+            var tickets = await _ticketService.GetAllAsync(filters);
             var ticketDtos = tickets.Select(ticket => 
                     new TicketResponseDto
                     {
