@@ -72,8 +72,6 @@ namespace Deskflow.API.Controllers
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetTicketById(Guid id)
         {
-            try
-            {
                 var ticket = await _ticketService.GetByIdAsync(id);            
                 return Ok( new TicketDetailsResponseDto
                     {
@@ -103,55 +101,20 @@ namespace Deskflow.API.Controllers
                                              }).ToList()
                     }
                 );            
-            }
-            catch(KeyNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
         }
 
         [HttpPatch("{id:guid}/start")]
         public async Task<IActionResult> StartTicket(Guid id)
         {
-            try
-            {
                 await _ticketService.StartAsync(id);
                 return NoContent();
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return BadRequest(ex.Message);
-            }
         }
 
         [HttpPatch("{id:guid}/close")]
         public async Task<IActionResult> CloseTicket(Guid id, [FromBody] CloseTicketDto closeTicketDto)
         {
-            try
-            {
                 await _ticketService.CloseAsync(id, closeTicketDto.Solution);
                 return NoContent();
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return BadRequest(ex.Message);
-            }
         }
     }
 }

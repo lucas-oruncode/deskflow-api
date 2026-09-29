@@ -1,4 +1,5 @@
 using Deskflow.API.Data;
+using Deskflow.API.Middlewares;
 using Deskflow.API.Repositories;
 using Deskflow.API.Repositories.Interfaces;
 using Deskflow.API.Services;
@@ -27,6 +28,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.UseMiddleware<ExceptionMiddleware>();
 app.MapControllers();
 
 app.Run();
