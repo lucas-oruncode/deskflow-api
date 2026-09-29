@@ -19,6 +19,20 @@ O sistema terá como objetivo centralizar o cadastro de categorias, a abertura e
 O projeto será desenvolvido em camadas, separando responsabilidades entre Controllers, Services, Repositories, Models, Data.
 
 
+## Clonar o repositório
+
+Antes de executar a aplicação, clone o repositório e acesse a pasta do projeto.
+
+Via SSH:
+```powershell
+git clone git@github.com:lucas-oruncode/deskflow-api.git
+```
+
+Via HTTPS:
+```powershell
+git clone https://github.com/lucas-oruncode/deskflow-api.git
+```
+
 ## Migrations
 
 As alterações do banco devem ser controladas por migrations do Entity Framework Core.
@@ -103,7 +117,7 @@ DELETE /api/category/{id}
 
 Uma exclusão bem-sucedida retorna `204 No Content`. Categorias inexistentes retornam `404 Not Found`.
 
-### Criar ticket
+### Criar chamado
 
 ```text
 POST /api/ticket
@@ -131,7 +145,7 @@ Como `priority` é um enum, os valores numéricos correspondem a:
 
 O status e as datas do ticket são definidos automaticamente pela aplicação. Uma criação bem-sucedida retorna `201 Created`.
 
-### Listar tickets
+### Listar chamados
 
 ```text
 GET /api/ticket
@@ -140,20 +154,20 @@ GET /api/ticket
 Retorna `200 OK` com os tickets cadastrados. A consulta aceita filtros opcionais combinados por status, prioridade e categoria:
 
 ```text
-GET /api/ticket?status=InProgress&priority=High&categoryId={id}
+GET /api/ticket?status=1&priority=2&categoryId={id}
 ```
 
 Os filtros disponíveis são:
 
 ```text
-status      = Open | InProgress | Closed
-priority    = Low | Medium | High
+status      = 0 (Open) | 1 (InProgress) | 2 (Closed)
+priority    = 0 (Low) | 1 (Medium) | 2 (High)
 categoryId  = identificador GUID da categoria
 ```
 
 Quando nenhum filtro é informado, todos os tickets são retornados. Quando mais de um filtro é informado, eles são combinados na mesma consulta.
 
-### Consultar ticket por ID
+### Consultar chamado por ID
 
 ```text
 GET /api/ticket/{id}
@@ -193,7 +207,7 @@ Exemplo de corpo:
 
 O encerramento só é permitido para tickets `InProgress`. A operação altera o status para `Closed`, registra a solução e preenche `ClosedAt`. Uma operação bem-sucedida retorna `204 No Content`.
 
-### Criar interação em um ticket
+### Criar interação em um chamado
 
 ```text
 POST /api/ticket/{ticketId}/interactions
@@ -210,7 +224,7 @@ Exemplo de corpo:
 
 A interação deve estar vinculada a um ticket existente e que não esteja fechado. Uma criação bem-sucedida retorna `201 Created`.
 
-### Listar interações de um ticket
+### Listar interações de um chamado
 
 ```text
 GET /api/ticket/{ticketId}/interactions
