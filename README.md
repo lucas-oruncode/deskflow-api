@@ -14,6 +14,11 @@ O sistema terá como objetivo centralizar o cadastro de categorias, a abertura e
 - SQL Server Express, instância `SQLEXPRESS`;
 - Swagger/OpenAPI para documentação e testes da API.
 
+## Arquitetura
+
+O projeto será desenvolvido em camadas, separando responsabilidades entre Controllers, Services, Repositories, Models, Data.
+
+
 ## Migrations
 
 As alterações do banco devem ser controladas por migrations do Entity Framework Core.
@@ -213,27 +218,23 @@ GET /api/ticket/{ticketId}/interactions
 
 Retorna `200 OK` com as interações cadastradas para o ticket. Tickets inexistentes retornam `404 Not Found`.
 
-## Organização planejada
+## Tratamento global de erros
 
-O projeto será desenvolvido em camadas, separando responsabilidades entre Controllers, Services, Repositories, Models, Data e Middlewares.
+A API utiliza um middleware customizado para centralizar o tratamento de exceções e retornar respostas JSON padronizadas, sem expor stack traces ao cliente.
 
-## Status atual
+Os principais mapeamentos são:
 
-- Entidade, Repository e Service de categorias implementados;
-- DTOs de entrada e saída de categorias implementados;
-- Migration inicial criada para a tabela `Categories`;
-- Endpoints CRUD de categorias implementados;
-- Entidade, Repository e Service básicos de tickets implementados;
-- DTOs de entrada e saída de tickets implementados;
-- Migrations criadas para tickets e solução do atendimento;
-- Migration criada para a tabela `Interactions`;
-- Endpoints de criação, listagem e consulta de tickets implementados;
-- Consulta detalhada de ticket com categoria e interações implementada;
-- Endpoints de início e encerramento do atendimento implementados;
-- Entidade, Repository e Service de interações implementados;
-- DTOs de entrada e saída de interações implementados;
-- Endpoints de criação e listagem de interações implementados;
-- Filtros dinâmicos de tickets por status, prioridade e categoria implementados;
-- Testes manuais dos endpoints realizados pelo Swagger;
-- A validação para impedir exclusão de categorias vinculadas a chamados será concluída após a criação da entidade `Chamado`;
-- Tratamento global de erros será implementado na próxima etapa.
+```text
+ArgumentException          -> 400 Bad Request
+KeyNotFoundException       -> 404 Not Found
+InvalidOperationException  -> 409 Conflict
+Outras exceções            -> 500 Internal Server Error
+```
+
+Exemplo de resposta:
+
+```json
+{
+  "message": "Ocorreu um erro interno no servidor."
+}
+```
