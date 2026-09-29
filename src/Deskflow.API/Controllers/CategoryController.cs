@@ -36,48 +36,24 @@ namespace Deskflow.API.Controllers
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetCategory(Guid id)
         {
-            try
-            {
                 var category = await _categoryService.GetByIdAsync(id);
                 return Ok(new CategoryResponseDto { Id = category.Id, Name = category.Name });
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
         }
 
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> UpdateCategory(Guid id, [FromBody] CategoryDto categoryDto)
         {
             var category = new Category { Name = categoryDto.Name };
-            try
-            {
+
                 await _categoryService.UpdateAsync(id, category);
                 return NoContent();
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
         }
 
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> DeleteCategory(Guid id)
         {
-            try
-            {
                 await _categoryService.DeleteAsync(id);
                 return NoContent();
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
         }
     }
 }

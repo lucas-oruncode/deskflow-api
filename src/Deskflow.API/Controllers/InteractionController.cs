@@ -43,8 +43,6 @@ namespace Deskflow.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllTicketInteractions(Guid ticketId)
         {
-            try
-            {
                 var interactions = await _interactionService.GetByTicketIdAsync(ticketId);
                 var interactionsDto = interactions.Select(interaction =>
                         new InteractionResponseDto
@@ -56,11 +54,6 @@ namespace Deskflow.API.Controllers
                             CreatedAt = interaction.CreatedAt
                         });
                 return Ok(interactionsDto);
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
         }
     }
 }
