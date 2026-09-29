@@ -16,7 +16,7 @@ O sistema terá como objetivo centralizar o cadastro de categorias, a abertura e
 
 ## Arquitetura
 
-O projeto será desenvolvido em camadas, separando responsabilidades entre Controllers, Services, Repositories, Models, Data.
+O projeto é organizado em camadas, separando responsabilidades entre Controllers, Services, Repositories, Models, Data e Middlewares.
 
 
 ## Clonar o repositório
@@ -32,6 +32,22 @@ Via HTTPS:
 ```powershell
 git clone https://github.com/lucas-oruncode/deskflow-api.git
 ```
+
+## Configuração
+
+A API utiliza o SQL Server Express, na instância `SQLEXPRESS`. Antes de executar as migrations, confirme que o serviço do SQL Server está em execução.
+
+A string de conexão está configurada em `src/Deskflow.API/appsettings.json`:
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=.\\SQLEXPRESS;Database=DeskflowDb;Trusted_Connection=True;TrustServerCertificate=True;"
+  }
+}
+```
+
+Caso utilize outra instância ou outro nome de banco, ajuste `DefaultConnection` antes de executar a aplicação.
 
 ## Migrations
 
