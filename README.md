@@ -268,3 +268,7 @@ Exemplo de resposta:
   "message": "Ocorreu um erro interno no servidor."
 }
 ```
+
+## Vídeo de apresentação
+
+[Acessar o vídeo de apresentação do projeto](https://drive.google.com/file/d/1g7pkQAfSXDY8Jb3j_F6MOnoS2PC65WxN/view?usp=drive_link)
